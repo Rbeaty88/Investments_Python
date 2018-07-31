@@ -51,7 +51,7 @@ class Binance:
         address = client.get_deposit_address(asset='BTC')
 
 # start aggregated trade websocket for BNBBTC
-    def process_message(msg):
+    def process_message(self, msg):
         print("message type: {}".format(msg['e']))
         print(msg)
         # do something
