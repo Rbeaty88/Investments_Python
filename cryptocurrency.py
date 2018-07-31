@@ -2,8 +2,8 @@ import binance
 from binance.client import Client
 
 
-api_key = "CinAst2MXStmyD12P9fIanzOmoXvH0M0kPiiodocqpTdZBUQoNNyGE70UlPjbVeK"
-api_secret = "nJyFIleM6SpzFmXOBnWyrl6Jngmo25gxzBCVRZRAfNFKDykywO59dqJ7sxqE2qIg"
+api_key = 
+api_secret = 
 
 client = Client(api_key, api_secret)
 
