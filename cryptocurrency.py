@@ -1,55 +1,60 @@
 import binance
 from binance.client import Client
 
+class Binance:
 
-api_key = "CinAst2MXStmyD12P9fIanzOmoXvH0M0kPiiodocqpTdZBUQoNNyGE70UlPjbVeK"
-api_secret = "nJyFIleM6SpzFmXOBnWyrl6Jngmo25gxzBCVRZRAfNFKDykywO59dqJ7sxqE2qIg"
+    def __init__(self, symbol, api_key, api_secret):
+        self.symbol = symbol
+        self.api_key = api_key
+        self.api_secret = api_secret
 
-client = Client(api_key, api_secret)
+    def connectClient(self):
 
-# get market depth
+        client = Client(self.api_key, self.api_secret)
 
-depth = client.get_order_book(symbol='BNBBTC')
+        # get market depth
 
-# place a test market buy order, to place an actual order use the create_order function
-order = client.create_test_order(
-    symbol='BNBBTC',
-    side=Client.SIDE_BUY,
-    type=Client.ORDER_TYPE_MARKET,
-    quantity=100)
+        depth = client.get_order_book(symbol='BNBBTC')
 
-# get all symbol prices
-prices = client.get_all_tickers()
+        # place a test market buy order, to place an actual order use the create_order function
+        order = client.create_test_order(
+            symbol='BNBBTC',
+            side=Client.SIDE_BUY,
+            type=Client.ORDER_TYPE_MARKET,
+            quantity=100)
 
-# withdraw 100 ETH
-# check docs for assumptions around withdrawals
-from binance.exceptions import BinanceAPIException, BinanceWithdrawException
-try:
-    result = client.withdraw(
-        asset='ETH',
-        address='<eth_address>',
-        amount=100)
-except BinanceAPIException as e:
-    print(e)
-except BinanceWithdrawException as e:
-    print(e)
-else:
-    print("Success")
+        # get all symbol prices
+        prices = client.get_all_tickers()
 
-# fetch list of withdrawals
-withdraws = client.get_withdraw_history()
+        # withdraw 100 ETH
+        # check docs for assumptions around withdrawals
+        from binance.exceptions import BinanceAPIException, BinanceWithdrawException
+        try:
+            result = client.withdraw(
+                asset='ETH',
+                address='<eth_address>',
+                amount=100)
+        except BinanceAPIException as e:
+            print(e)
+        except BinanceWithdrawException as e:
+            print(e)
+        else:
+            print("Success")
 
-# fetch list of ETH withdrawals
-eth_withdraws = client.get_withdraw_history(asset='ETH')
+        # fetch list of withdrawals
+        withdraws = client.get_withdraw_history()
 
-# get a deposit address for BTC
-address = client.get_deposit_address(asset='BTC')
+        # fetch list of ETH withdrawals
+        eth_withdraws = client.get_withdraw_history(asset='ETH')
+
+        # get a deposit address for BTC
+        address = client.get_deposit_address(asset='BTC')
 
 # start aggregated trade websocket for BNBBTC
-def process_message(msg):
-    print("message type: {}".format(msg['e']))
-    print(msg)
-    # do something
+    def process_message(msg):
+        print("message type: {}".format(msg['e']))
+        print(msg)
+        # do something
 
 ''''from binance.websockets import BinanceSocketManager
 bm = BinanceSocketManager(client)
